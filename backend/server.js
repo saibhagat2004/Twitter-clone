@@ -1,5 +1,6 @@
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import dotenv from "dotenv";
 import connectMongoDB  from "./db/connentMongoDB.js";
 import cookieParser from "cookie-parser";
@@ -14,6 +15,7 @@ app.use(cookieParser());  // parses cookies attached to the client request objec
                           //making them accessible via req.cookies. 
 
  app.use("/api/auth",authRoutes);
+ app.use("/api/users",userRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);

@@ -8,7 +8,7 @@ router.get("/",(req,res)=>{
     res.send("Welcome")
 })
 
-router.get("/me",protectRoute,getMe);
+router.get("/me",protectRoute,getMe);   ;//protectRoute is middleware that check if the user is valid or not . if valid then it run getMe function by using next.
 
 router.post("/signup", signup);
 
