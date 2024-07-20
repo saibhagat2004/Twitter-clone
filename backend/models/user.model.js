@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
     minLength:6,
    },
 
+   password:{
+      type:String,
+      require:true,
+      minLengthL:6,
+   },
+
    email:{
     type:String,
     require:true,
