@@ -1,63 +1,140 @@
-import mongoose  from "mongoose";
+// import mongoose  from "mongoose";
 
-const userSchema = new mongoose.Schema({
-   username:{
-    type:String,
-    require:true,
-    unique: true
-   },
+// const userSchema = new mongoose.Schema({
+//    username:{
+//     type:String,
+//     require:true,
+//     unique: true
+//    },
 
-   fullName:{
-    type:String,
-    require:true,
-    minLength:6,
-   },
+//    fullName:{
+//     type:String,
+//     require:true,
+//     minLength:6,
+//    },
 
-   password:{
-      type:String,
-      require:true,
-      minLengthL:6,
-   },
+//    password:{
+//       type:String,
+//       require:true,
+//       minLengthL:6,
+//    },
 
-   email:{
-    type:String,
-    require:true,
-    unique:true,
-   },
+//    email:{
+//     type:String,
+//     require:true,
+//     unique:true,
+//    },
 
-   followers:[{
-    type:mongoose.Schema.Types.ObjectId,  //  follower should have type of mongodb ID 
-    ref:"User",
-    default:[] 
-   }],
+//    followers:[{
+//     type:mongoose.Schema.Types.ObjectId,  //  follower should have type of mongodb ID 
+//     ref:"User",
+//     default:[] 
+//    }],
 
-   following:[{
-    type:mongoose.Schema.Types.ObjectId,  //  follower should have type of mongodb ID 
-    ref:"User",
-    default:[] 
-   }],
+//    following:[{
+//     type:mongoose.Schema.Types.ObjectId,  //  follower should have type of mongodb ID 
+//     ref:"User",
+//     default:[] 
+//    }],
 
-   profileImg:{
-    type:String,
-    default:"",
-   },
+//    profileImg:{
+//     type:String,
+//     default:"",
+//    },
 
-   coverImg:{
-    type:String,
-    default:"",
-   },
+//    coverImg:{
+//     type:String,
+//     default:"",
+//    },
 
-   bio:{
-    type:String,
-    default:"",
-   },
+//    bio:{
+//     type:String,
+//     default:"",
+//    },
 
-   link:{
-    type:String,
-    default:"",
-   }
-},{timestamps: true})
+//    link:{
+//     type:String,
+//     default:"",
+//    },
 
-const User= mongoose.model("User", userSchema);
+//    likePost:[
+//       {
+//          type: mongoose.Schema.Types.ObjectId,
+//          ref:"Post",
+//          default:[]
+//       }
+//    ]
+// },{timestamps: true})
+
+// const User= mongoose.model("User", userSchema);
+
+// export default User;
+
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema(
+	{
+		username: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		fullName: {
+			type: String,
+			required: true,
+		},
+		password: {
+			type: String,
+			required: true,
+			minLength: 6,
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		followers: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+				default: [],
+			},
+		],
+		following: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+				default: [],
+			},
+		],
+		profileImg: {
+			type: String,
+			default: "",
+		},
+		coverImg: {
+			type: String,
+			default: "",
+		},
+		bio: {
+			type: String,
+			default: "",
+		},
+
+		link: {
+			type: String,
+			default: "",
+		},
+		likedPosts: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Post",
+				default: [],
+			},
+		],
+	},
+	{ timestamps: true }
+);
+
+const User = mongoose.model("User", userSchema);
 
 export default User;
