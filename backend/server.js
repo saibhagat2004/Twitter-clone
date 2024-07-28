@@ -2,6 +2,7 @@ import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
+import notificationRoutes from "./routes/notification.route.js"
 import dotenv from "dotenv";
 import {v2 as cloudinary} from "cloudinary"
 import connectMongoDB  from "./db/connentMongoDB.js";
@@ -28,6 +29,8 @@ app.use(cookieParser());  // parses cookies attached to the client request objec
  app.use("/api/auth",authRoutes);
  app.use("/api/users",userRoutes);
  app.use("/api/posts",postRoutes);
+ app.use("/api/notifications",notificationRoutes);
+
 
 app.listen(PORT,()=>{
     console.log(`server is running on port ${PORT}`);
