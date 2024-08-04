@@ -250,7 +250,7 @@ export const likeUnlikePost = async (req, res) => {
 			await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
 			await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
 
-			const updatedLikes = post.likes.filter((id) => id.toString() !== userId.toString());
+			const updatedLikes = post.likes.filter((id) => id.toString() !== userId.toString());  //This line creates a new array updatedLikes that contains all the likes of the post except the current user's ID.
 			res.status(200).json(updatedLikes);
 		} else {
 			// Like post
