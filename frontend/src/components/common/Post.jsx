@@ -21,7 +21,6 @@ const Post = ({ post }) => {
 	const isMyPost = authUser._id === post.user._id;
 	const formattedDate = formatPostDate(post.createdAt)
 
-
 	const { mutate: deletePost, isPending: isDeleting } = useMutation({
 		mutationFn: async () => {
 			try {
@@ -55,12 +54,14 @@ const Post = ({ post }) => {
 				if (!res.ok) {
 					throw new Error(data.error || "Something went wrong");
 				}
+				console.log(data)
 				return data;
+
 			} catch (error) {
 				throw new Error(error);
 			}
 		},
-		onSuccess: (updatedLikes) => {
+		onSuccess: (updatedLikes) => {      //we can use this because of return data on line 57 
 			// this is not the best UX, bc it will refetch all posts
 			// queryClient.invalidateQueries({ queryKey: ["posts"] });
 
