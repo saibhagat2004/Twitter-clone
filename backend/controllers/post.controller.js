@@ -63,8 +63,8 @@ export const createPost = async (req, res) => {
 		}
 
 		if (img) {
-			const uploadedResponse = await cloudinary.uploader.upload(img);
-			img = uploadedResponse.secure_url;
+			const uploadedResponse = await cloudinary.uploader.upload(img);  // it uploads the base64 encoded image to Cloudinary using:
+			img = uploadedResponse.secure_url;            //The response from Cloudinary contains the URL of the uploaded image, which is then assigned to img:
 		}
 
 		const newPost = new Post({

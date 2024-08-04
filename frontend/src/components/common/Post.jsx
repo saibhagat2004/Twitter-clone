@@ -13,7 +13,7 @@ const Post = ({ post }) => {
 	const [comment, setComment] = useState("");
 	const {data:authUser}= useQuery({queryKey:["authUser"]});
 	const queryClient = useQueryClient();
-	const { mutate: deletePost, isPending , isDeleting } = useMutation({
+	const { mutate: deletePost , isDeleting } = useMutation({
 		mutationFn: async () => {
 			try {
 				const res = await fetch(`/api/posts/${post._id}`, {   //fetch is a built-in JavaScript function used to make HTTP requests.await is used to wait for the promise returned by fetch to resolve. This means the code will pause at this line until the fetch request completes and returns a response.
