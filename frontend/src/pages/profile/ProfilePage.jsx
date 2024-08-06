@@ -11,8 +11,9 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import {useQuery } from "@tanstack/react-query";
-// import toast from "react-hot-toast";
 import { formatMemberSinceDate } from "../../utils/db/date";
+import useFollow from "../../hooks/usefollow";
+import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 
 const ProfilePage = () => {
 	const [coverImg, setCoverImg] = useState(null);
@@ -24,12 +25,10 @@ const ProfilePage = () => {
 
 
 	const { username } = useParams();
-	const  isMyProfile=true
-	// const { follow, isPending } = useFollow();
-	// const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+	const { follow, isPending } = useFollow();
+	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
-	const {
-		data: user,isLoading,refetch,isRefetching,} = useQuery({
+	const {data: user ,isLoading,refetch,isRefetching,} = useQuery({
 		queryKey: ["userProfile"],
 		queryFn: async () => {
 			try {
@@ -43,13 +42,13 @@ const ProfilePage = () => {
 				throw new Error(error);
 			}
 		},
-	});
+	});4
 
-	// const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
-
-	// const isMyProfile = authUser._id === user?._id;
+	const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
+	const isMyProfile = authUser._id === user?._id;
 	const memberSinceDate = formatMemberSinceDate(user?.createdAt);
-	// const amIFollowing = authUser?.following.includes(user?._id);
+	const amIFollowing = authUser?.following.includes(user?._id);  // ?. syntax in JavaScript is known as the optional chaining operator. It is used to safely access deeply nested properties of an object without having to explicitly check if each reference in the chain is valid (i.e., not null or undefined).
+	// user?._id: This means "if user is not null or undefined, then access the _id property; otherwise, return undefined."
 	const handleImgChange = (e, state) => {
 		const file = e.target.files[0];
 		if (file) {
@@ -131,21 +130,28 @@ const ProfilePage = () => {
 								</div>
 							</div>
 							<div className='flex justify-end px-4 mt-5'>
-								{isMyProfile && <EditProfileModal />}
+								{isMyProfile && <EditProfileModal authUser={authUser} />}
 								{!isMyProfile && (
 									<button
 										className='btn btn-outline rounded-full btn-sm'
-										onClick={() => alert("Followed successfully")}
+										onClick={() => follow(user?._id)}
 									>
-										Follow
+										{isPending && "Loading..."}
+										{!isPending && amIFollowing && "Unfollow"}
+										{!isPending && !amIFollowing && "Follow"}
 									</button>
 								)}
 								{(coverImg || profileImg) && (
 									<button
 										className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
-										onClick={() => alert("Profile updated successfully")}
+										onClick={async () => {
+											await updateProfile({ coverImg, profileImg });
+											setProfileImg(null);
+											setCoverImg(null);
+										}}
 									>
-										Update
+										{isUpdatingProfile ? "Updating..." : "Update"}
+
 									</button>
 								)}
 							</div>
@@ -163,12 +169,12 @@ const ProfilePage = () => {
 											<>
 												<FaLink className='w-3 h-3 text-slate-500' />
 												<a
-													href='https://youtube.com/@asaprogrammer_'
+													href={user?.link}
 													target='_blank'
 													rel='noreferrer'
 													className='text-sm text-blue-500 hover:underline'
 												>
-													youtube.com/@asaprogrammer_
+													{user?.link}
 												</a>
 											</>
 										</div>
