@@ -7,6 +7,12 @@ const useUpdateUserProfile = () => {
 
 	const { mutateAsync: updateProfile, isPending: isUpdatingProfile } = useMutation({
 		mutationFn: async (formData) => {
+			
+				// Sanitize the likedPosts array
+				if (formData.likedPosts) {
+					formData.likedPosts = formData.likedPosts.filter(postId => postId);
+				}
+
 			try {
 				const res = await fetch(`/api/users/update`, {
 					method: "POST",
