@@ -67,7 +67,7 @@ cloudinary.config({
 
 const app = express();
 app.use(cors({
-  origin: "https://deploy-mern-1whq.vercel.app",
+  origin: "https://twitter-clone-gxe9.vercel.app",
   methods: ["POST", "GET"],
   credentials: true
 }));
