@@ -20,7 +20,7 @@ const {data:authUser,isLoading}=useQuery({      	// authUser is not directly sto
 													// the query. The key is used to cache and retrieve the query data.
 	queryFn: async ()=>{
 		try {
-			const res= await fetch("/api/auth/me");
+			const res = await fetch("https://twitter-clone-gxe9.vercel.app/api/auth/me");
 			const data= await res.json()
 			if(data.error) return null
 			if(!res.ok){
@@ -53,7 +53,7 @@ if (isLoading) {
 		{/* any thing outside Routes compontent is common component */}
 			{authUser && <Sidebar />}
 			<Routes>
-			<Route path='/twitter-clone-five-psi.vercel.app' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
+			<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/login' />} />
 				<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
 				<Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to='/' />} />
 				<Route path='/notifications' element={authUser ? <NotificationPage /> : <Navigate to='/login' />} />
