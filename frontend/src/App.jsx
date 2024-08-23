@@ -19,8 +19,8 @@ const {data:authUser,isLoading}=useQuery({      	// authUser is not directly sto
 													// 	• queryKey: This is an array that uniquely identifies
 													// the query. The key is used to cache and retrieve the query data.
 	queryFn: async ()=>{
-		try {
-			const res = await fetch("https://twitter-clone-gxe9.vercel.app/api/auth/me");
+		try {            
+			const res = await fetch("/api/auth/me");
 			const data= await res.json()
 			if(data.error) return null
 			if(!res.ok){
@@ -67,3 +67,6 @@ if (isLoading) {
 }
 
 export default App
+
+
+
